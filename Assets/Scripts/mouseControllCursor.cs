@@ -11,28 +11,31 @@ public class mouseControllCursor : MonoBehaviour
     public Animator IndicatorAnimator;
     float CountDownProgress = 0;
     RectTransform Self;
-    bool CoroutineRun = false;
     float ScreenScale;
+    public MonsterAttraction playerMonsterAttr;
+
     Canvas ScreenCanvas;
-    Vector2 RandMov,currentMov = Vector2.up;
+    Vector2 RandMov,currentMov = Vector2.up,fixedMov;
     public Animator CanvasAnimator;
+    Rigidbody2D CursorRB;
     
     void Awake() {
+        
             Self = GetComponent<RectTransform>();
             controls = new Inputmaster();     
             ScreenCanvas = GetComponentInParent<Canvas>();
-            Debug.Log(ScreenScale);
             ResetGame();
+            CursorRB = GetComponent<Rigidbody2D>();
     }
     public bool AnimIsResistPhase(){
         return CanvasAnimator.GetInteger("Step") == 2;
     }
 
     void FixedUpdate() {   
-        ScreenScale = ScreenCanvas.scaleFactor;
-        if(!CoroutineRun && AnimIsResistPhase()) StartCoroutine(DirChange());
+        ScreenScale = ScreenCanvas.scaleFactor; // adapte la vitesse dans l'ui par rapport a la taille de l'ecran afin que le mouvement ne soit pas plus lent en haute resolution
         if(AnimIsResistPhase() && !Pause.IsPaused){
-            transform.Translate((getMouse()*5f*fpsController.sensitivity + currentMov)*ScreenScale*3.5f);
+
+            CursorRB.MovePosition(CursorRB.position + (getMouse() +currentMov)*ScreenScale*7 );
             CountDownProgress += Time.fixedDeltaTime * 0.2f;
             CountDown.localScale = Vector3.Lerp(Vector3.zero, Vector3.one,CountDownProgress);
             
@@ -40,16 +43,14 @@ public class mouseControllCursor : MonoBehaviour
                 ResetGame();
             }
             if(CountDownProgress >= 1){
-                Attraction.isEscaping = true;
-                Choice.CurrentMonster = null;
+                playerMonsterAttr.Escape();
                 ResetGame(); 
             }
         }
         
     }
 
-    IEnumerator DirChange(){
-        CoroutineRun = true;
+    public IEnumerator DirChange(){
         while (AnimIsResistPhase()){
             while(Vector2.SignedAngle(RandMov,currentMov)<90 && Vector2.SignedAngle(RandMov,currentMov)>-90){
                 RandMov = Random.insideUnitCircle.normalized;
@@ -61,14 +62,13 @@ public class mouseControllCursor : MonoBehaviour
         currentMov = RandMov;
         yield return new WaitForSeconds(0.5f);
         }
-        CoroutineRun = false;
     }
     public void ResetGame(){
         Self.anchoredPosition = Vector3.zero;
         CountDownProgress=0;
     }
     public Vector2 getMouse(){
-        return controls.player.Camera.ReadValue<Vector2>();
+        return controls.player.Camera.ReadValue<Vector2>() * fpsController.sensitivity;
     }
     private void OnEnable() {
         controls.Enable();

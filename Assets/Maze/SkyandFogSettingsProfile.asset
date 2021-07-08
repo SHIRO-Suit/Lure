@@ -87,6 +87,7 @@ MonoBehaviour:
   - {fileID: 5344652756874662184}
   - {fileID: -466525434632250678}
   - {fileID: 4745465664678062571}
+  - {fileID: 7626593662236756438}
 --- !u!114 &4745465664678062571
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -385,4 +386,63 @@ MonoBehaviour:
     m_Value: 0
   fogType:
     m_OverrideState: 1
+    m_Value: 0
+--- !u!114 &7626593662236756438
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec08c789f09cebf47b9dfa879f470851, type: 3}
+  m_Name: HDRPOutline
+  m_EditorClassIdentifier: 
+  active: 1
+  m_AdvancedMode: 0
+  mode:
+    m_OverrideState: 1
+    m_Value: 1
+  width:
+    m_OverrideState: 1
+    m_Value: 10
+  fillAmount:
+    m_OverrideState: 1
+    m_Value: 0.061
+    min: 0
+    max: 1
+  patternTexture:
+    m_OverrideState: 1
+    m_Value: {fileID: 2800000, guid: f4ffff85d7cd3b94e90a79fd1b54cac9, type: 3}
+  patternFillAmount:
+    m_OverrideState: 1
+    m_Value: 0.694
+    min: 0
+    max: 1
+  patternTile:
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 1}
+  iterations:
+    m_OverrideState: 0
+    m_Value: 1
+  blurRadius:
+    m_OverrideState: 1
+    m_Value: 1
+  blurIterations:
+    m_OverrideState: 1
+    m_Value: 1
+  overglow:
+    m_OverrideState: 1
+    m_Value: 1
+  softnessEnabled:
+    m_OverrideState: 1
+    m_Value: 0
+  softness:
+    m_OverrideState: 1
+    m_Value: 0.5
+    min: 0.001
+    max: 1
+  singlePassInstanced:
+    m_OverrideState: 0
     m_Value: 0

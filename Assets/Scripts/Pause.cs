@@ -18,7 +18,7 @@ public class Pause : MonoBehaviour
     }
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape) == true)  {
+        if(Input.GetKeyDown(KeyCode.Escape))  {
             if(IsPaused){
                 Resume();
             }else{
@@ -30,7 +30,7 @@ public class Pause : MonoBehaviour
         Cursor.visible = false;
         IsPaused = false;
         Time.timeScale = 1;
-        FPSPlayer.enabled = !minigame.AnimIsResistPhase(); 
+        FPSPlayer.enabled = true; 
         PauseMenu.SetActive(false);
     }
     public void Stop(){

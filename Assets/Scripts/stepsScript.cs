@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class stepsScript : MonoBehaviour
 {
-    
-    Vector3 pastPos, velocity;
+    public MonsterAttraction playerMAScript;
+    Vector3 pastPos;
     public AudioSource feet;
     public AudioClip[] clips;
     float movement;
@@ -14,6 +14,7 @@ public class stepsScript : MonoBehaviour
 
 
     void Start() {
+
         StartCoroutine(fixedAudioUpdate());    
     }
     IEnumerator fixedAudioUpdate(){
@@ -24,8 +25,8 @@ public class stepsScript : MonoBehaviour
     void updateSim()
     {
         if(transform.position != pastPos) movement += (transform.position - pastPos).sqrMagnitude ;//* Time.fixedDeltaTime;
-        if(Attraction.isAttracted ){
-            if(Attraction.AntidoteInjected){
+        if(playerMAScript.GetAnimState()!=0 ){
+            if(playerMAScript.antidoteInjected){
                 if(movement>.6f){
             PlayRandom();
             ResetMov();
@@ -36,7 +37,7 @@ public class stepsScript : MonoBehaviour
             ResetMov();
             }
             }}
-        else if(Attraction.isEscaping){
+        else if(playerMAScript.isEscaping){
             if(movement >.45f){
                 PlayRandom();
                 ResetMov();
