@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: f8f22e55efa95af408dfb727d6017f75
+guid: e2746e5ca3675c348920d46c1be9b4a7
 ModelImporter:
   serializedVersion: 21100
   internalIDToNameTable:
@@ -23,7 +23,7 @@ ModelImporter:
     second: porte droite_low|Cube.067_Piece.009Action.003
   externalObjects: {}
   materials:
-    materialImportMode: 2
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 0

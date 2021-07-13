@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Knife.HDRPOutline.Core;
+//using Knife.HDRPOutline.Core;
 using TMPro;
 using UnityEngine.Rendering;
 
@@ -11,12 +11,13 @@ public class Inventory : MonoBehaviour
     public Animator /*AttractionAnimator,*/ MessageAnimator;
     public TextMeshProUGUI MessageText,UseObjectText;
     public Collider[] ObjectsFound;
-    OutlineObject objectOutline;
+    //OutlineObject objectOutline;
+    Outline objectOutline;
     public Volume postProcessVolume;
-    public HDRPOutline outlineShader;     
+    //public HDRPOutline outlineShader;     
     Interactable objInteractable;
     void Start() {
-        postProcessVolume.profile.TryGet<HDRPOutline>(out outlineShader);    
+        //postProcessVolume.profile.TryGet<HDRPOutline>(out outlineShader);    
     }
     
     void Update()
@@ -26,7 +27,6 @@ public class Inventory : MonoBehaviour
             UseObjectText.text = "";
             objInteractable = null;
             if(objectOutline) ActivateOutline(false);
-            ObjectNeeded(false);
         }
         
         foreach(Collider Object in ObjectsFound){
@@ -64,7 +64,7 @@ public class Inventory : MonoBehaviour
                     }
                     else
                     {
-                        ObjectNeeded(true);
+                        ObjectNeeded();
                         UseObjectText.text = "<!> Requires <u>" + objInteractable.objectNeeded + "</u>";
                     }   
                 }
@@ -73,7 +73,7 @@ public class Inventory : MonoBehaviour
     }
     void SetObjValues(Collider Object){
         objInteractable = objInteractable ?? Object.GetComponent<Interactable>();
-        objectOutline= Object.GetComponent<OutlineObject>() ?? Object.GetComponentInChildren<OutlineObject>();
+        objectOutline= Object.GetComponent<Outline>() ?? Object.GetComponentInChildren<Outline>();
     }
     void InventorySubstract(string objName){
         if(Objects[objName]>1){
@@ -91,19 +91,15 @@ public class Inventory : MonoBehaviour
         MessageDisplay(objName);
     }
     void ActivateOutline(bool activation){
-        objectOutline.Color = activation? Color.white : Color.clear;
+        objectOutline.OutlineColor = activation? Color.white : Color.clear;
     }
     void MessageDisplay(string objName){
         MessageText.text = "[+1] " + objName;
         MessageAnimator.SetTrigger("TextChanged");
     }
-    void ObjectNeeded(bool isNeeded){
-        if(isNeeded){
-            outlineShader.patternTexture.overrideState = true;
-            objectOutline.Color = Color.red;
-        }else{
-            outlineShader.patternTexture.overrideState = false;
-        }  
+    void ObjectNeeded(){
+            objectOutline.OutlineColor = Color.red;
+
     }
 }
 

@@ -18,12 +18,12 @@ public class MonsterAttraction : MonoBehaviour
     bool giveInOrLose = false;
     Quaternion toRotation;
     
-    void OnDrawGizmosSelected() { // dessine les spheres dans l'editeur pour mieux se reperer, du coup ne marche pas puisque la recherche se fait dans la start seulement
-        foreach (GameObject monster in monsters){
-            Gizmos.DrawWireSphere(monster.transform.position,triggerDistance);
-        }
+    // void OnDrawGizmosSelected() { // dessine les spheres dans l'editeur pour mieux se reperer, du coup ne marche pas puisque la recherche se fait dans la start seulement
+    //     foreach (GameObject monster in monsters){
+    //         Gizmos.DrawWireSphere(monster.transform.position,triggerDistance);
+    //     }
         
-    }
+    // }
     void Start()
     {
         playerFpsCtrl = GetComponent<fpsController>();
@@ -49,6 +49,8 @@ public class MonsterAttraction : MonoBehaviour
                 nearSpeed= (sqrDist/direction.sqrMagnitude);// acceleration progressive lorse qu'on a le controle
                 if(playerFpsCtrl.getMouse()!=Vector2.zero) progress = 0; // laisse le joueur deplacer son curseur et remet la vue sur le monstre lorsqu'on relache (avec antidote)
                 deathWhenAntidote();
+                nearestMonster.transform.rotation = toRotation ; // pour que le monstre nous fixe
+
             }else{
                 nearSpeed = 1;
                 minigameSequence(); // lance le minijeu seulement lorsqu'on a pas l'antidote.
@@ -63,6 +65,7 @@ public class MonsterAttraction : MonoBehaviour
             transform.Translate(direction.normalized * nearSpeed * giveInSpeed * Time.deltaTime * .6f, Space.World); // avancée vers le monstre, Give in speed est plus rapide quand on abandonne la resistance.
             
         }else if (isEscaping){
+            nearestMonster.GetComponent<Animator>().Play("idle");
             BreathingPlay();
             toRotation *= (progress == 0 ) ? Quaternion.Euler(Vector3.up * 180) : Quaternion.identity;// fait le calcul qu'une seule fois pendant la fuite, evite de tourner a l'infini (demi-tour)
             progress += Time.deltaTime;
@@ -78,6 +81,7 @@ public class MonsterAttraction : MonoBehaviour
                 ControlsToogle(true); 
             }
             
+            
         }
 
     }
@@ -87,7 +91,6 @@ public class MonsterAttraction : MonoBehaviour
         progress = 0;
     }
     void minigameSequence(){
-        Debug.Log("1");
         switch(GetAnimState()){
             case 0: if (!giveInOrLose && !isEscaping) {SetAnimState(1); nearestMonster.GetComponent<AudioSource>().Play();} break;
             case 1: Debug.Log("3"); 

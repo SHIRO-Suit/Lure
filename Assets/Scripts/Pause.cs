@@ -8,6 +8,7 @@ public class Pause : MonoBehaviour
     public GameObject PauseMenu;
     public fpsController FPSPlayer;
     public mouseControllCursor minigame;
+    public GameObject note,useObjectText;
    
     void Start() {
         //Time.timeScale = 0; 
@@ -32,6 +33,8 @@ public class Pause : MonoBehaviour
         Time.timeScale = 1;
         FPSPlayer.enabled = true; 
         PauseMenu.SetActive(false);
+        note.SetActive(false);
+        useObjectText.SetActive(true);
     }
     public void Stop(){
         Cursor.visible = true;
@@ -39,5 +42,7 @@ public class Pause : MonoBehaviour
         Time.timeScale = 0;
         FPSPlayer.enabled = false; 
         PauseMenu.SetActive(true);
+        useObjectText.SetActive(false);
+
     }
 }
