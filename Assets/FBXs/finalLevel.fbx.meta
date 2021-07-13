@@ -1,14 +1,14 @@
 fileFormatVersion: 2
-guid: 0c8a25235705bcf44bb085ffecbcd73e
+guid: 353f6915a82b3914cb0a27acf532c4a2
 ModelImporter:
   serializedVersion: 21100
   internalIDToNameTable: []
   externalObjects: {}
   materials:
-    materialImportMode: 1
+    materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -33,7 +33,10 @@ ModelImporter:
     clipAnimations: []
     isReadable: 0
   meshes:
-    lODScreenPercentages: []
+    lODScreenPercentages:
+    - 0.5
+    - 0.25
+    - 0.01
     globalScale: 1
     meshCompression: 0
     addColliders: 0

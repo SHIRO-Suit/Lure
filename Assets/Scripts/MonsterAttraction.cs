@@ -63,6 +63,7 @@ public class MonsterAttraction : MonoBehaviour
             transform.Translate(direction.normalized * nearSpeed * giveInSpeed * Time.deltaTime * .6f, Space.World); // avancée vers le monstre, Give in speed est plus rapide quand on abandonne la resistance.
             
         }else if (isEscaping){
+            nearestMonster.GetComponent<Animator>().Play("idle");
             BreathingPlay();
             toRotation *= (progress == 0 ) ? Quaternion.Euler(Vector3.up * 180) : Quaternion.identity;// fait le calcul qu'une seule fois pendant la fuite, evite de tourner a l'infini (demi-tour)
             progress += Time.deltaTime;
@@ -77,6 +78,7 @@ public class MonsterAttraction : MonoBehaviour
             if (!Pause.IsPaused){ // evite d'avoir le controle du fps et le menu en meme temps au demarrage
                 ControlsToogle(true); 
             }
+            
             
         }
 
